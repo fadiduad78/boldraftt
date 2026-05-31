@@ -47,7 +47,7 @@ export default function Hero() {
 
         <motion.div className="cta-row" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.95 }}>
           <Magnetic href="#contact" className="btn btn-primary" data-cursor="start">Start Your Project</Magnetic>
-          <Magnetic href="#work" className="btn btn-ghost" data-cursor="view">View Our Work ↗</Magnetic>
+          <Magnetic href="#services" className="btn btn-ghost" data-cursor="view">See What We Do ↗</Magnetic>
         </motion.div>
       </div>
 
