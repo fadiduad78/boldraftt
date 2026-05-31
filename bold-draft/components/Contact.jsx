@@ -3,9 +3,16 @@ import { useRef, useState } from "react";
 import Reveal from "./Reveal";
 import Magnetic from "./Magnetic";
 
+// 👇 PASTE YOUR WEB3FORMS ACCESS KEY BETWEEN THE QUOTES
+const WEB3FORMS_ACCESS_KEY = "c5468124-7ed3-4cb4-a593-7b084feb565b";
+
 export default function Contact() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const card = useRef(null);
 
   const celebrate = () => {
@@ -35,10 +42,39 @@ export default function Contact() {
     }
   };
 
-  const submit = () => {
-    // TODO: POST to your API route / email service / CMS here
-    setSent(true);
-    celebrate();
+  const submit = async () => {
+    if (sending) return;
+    if (!name || !email || !message) {
+      setError("Please fill in all the fields.");
+      return;
+    }
+    setError("");
+    setSending(true);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: "New Bold Draft enquiry",
+          from_name: "Bold Draft website",
+          name,
+          email,
+          message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSent(true);
+        celebrate();
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } catch (e) {
+      setError("Network error. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -61,14 +97,15 @@ export default function Contact() {
               </div>
               <div className="field">
                 <label>Email</label>
-                <input type="email" placeholder="you@brand.com" />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@brand.com" />
               </div>
               <div className="field">
                 <label>Tell us about the project</label>
-                <textarea placeholder="We're a skincare brand and our content feels... beige." />
+                <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="We're a skincare brand and our content feels... beige." />
               </div>
+              {error && <p style={{ color: "#ff9bbf", marginBottom: 16 }}>{error}</p>}
               <Magnetic as="button" className="btn btn-primary submit" data-cursor="send" onClick={submit}>
-                Send it →
+                {sending ? "Sending..." : "Send it →"}
               </Magnetic>
             </div>
           )}
