@@ -43,7 +43,7 @@ body.cur-hover .cursor{width:0;height:0}
 .bd-loader-inner{display:flex;flex-direction:column;align-items:center;gap:22px}
 .bd-spinner{width:46px;height:46px;border-radius:50%;border:3px solid rgba(184,158,187,.2);border-top-color:var(--light);animation:bd-spin .8s linear infinite}
 @keyframes bd-spin{to{transform:rotate(360deg)}}
-.bd-loader-pct{font-family:var(--logo);font
+.bd-loader-pct{font-family:var(--logo);font-weight:800;letter-spacing:.25em;font-size:.72rem;color:var(--light)}
 
 /* LOGO */
 .logo-lk{display:inline-flex;align-items:center;gap:.3em;line-height:1;font-size:var(--ls,1.6rem)}
