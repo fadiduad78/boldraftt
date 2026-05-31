@@ -9,22 +9,34 @@ export default function Loader() {
   useEffect(() => {
     document.body.classList.add("no-scroll");
     let p = 0;
+
+    const finish = () => {
+      setPct(100);
+      setDone(true);
+      document.body.classList.remove("no-scroll");
+      setTimeout(() => setGone(true), 700);
+    };
+
     const id = setInterval(() => {
       p += Math.random() * 18;
       if (p >= 100) {
-        p = 100;
         clearInterval(id);
-        setPct(100);
-        setTimeout(() => {
-          setDone(true);
-          document.body.classList.remove("no-scroll");
-          setTimeout(() => setGone(true), 700);
-        }, 300);
+        finish();
       } else {
         setPct(p);
       }
     }, 140);
-    return () => clearInterval(id);
+
+    // safety net: always remove the loader after 3.5s no matter what
+    const safety = setTimeout(() => {
+      clearInterval(id);
+      finish();
+    }, 3500);
+
+    return () => {
+      clearInterval(id);
+      clearTimeout(safety);
+    };
   }, []);
 
   if (gone) return null;
