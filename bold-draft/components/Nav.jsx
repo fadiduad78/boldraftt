@@ -29,7 +29,6 @@ export default function Nav() {
       <div className={`links${open ? " open" : ""}`}>
         <a href="#about">Studio</a>
         <a href="#services">Services</a>
-        <a href="#work">Work</a>
         <a href="#team">Team</a>
         <a href="#contact">Contact</a>
       </div>
