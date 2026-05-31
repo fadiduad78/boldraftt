@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-const LABELS = { view: "VIEW", open: "OPEN", explore: "EXPLORE", start: "START", send: "SEND" };
+const LABELS = { view: "VIEW", open: "OPEN", explore: "EXPLORE", start: "START" };
 
 export default function Cursor() {
   const dot = useRef(null);
